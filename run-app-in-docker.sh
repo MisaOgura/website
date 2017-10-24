@@ -9,4 +9,4 @@ docker-compose rm -f
 docker-compose build
 
 # Runs the app with port(s) enabled and mapped to the host. Removes the container after run.
-docker-compose run --rm --service-ports app
+docker-compose run --rm --service-port app

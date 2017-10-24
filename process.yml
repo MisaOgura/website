@@ -1,0 +1,5 @@
+apps:
+  - name      : 'app-server'
+    script    : ./dist/server/app.js
+    exec_mode : "cluster"
+    instances : 0
