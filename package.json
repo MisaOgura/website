@@ -65,8 +65,9 @@
     "webpack-dev-server": "^2.8.2"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "dist/"
+    "coveragePathIgnorePatterns": [
+      "src/setupTest",
+      "src/shim"
     ],
     "setupFiles": [
       "<rootDir>/src/shim.js",
@@ -75,6 +76,7 @@
   },
   "standard": {
     "globals": [
+      "jest",
       "describe",
       "context",
       "before",

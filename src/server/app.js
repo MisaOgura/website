@@ -4,9 +4,12 @@ import express from 'express'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 
+import internalRouter, { simulatedErrMessage } from './routes/internalRouter'
 import HelloWorld from '../client/components/helloWorld'
 
 const app = express()
+
+app.use('/internal', internalRouter)
 
 app.get('/', (req, res) => {
   // Loads a template.
@@ -21,10 +24,21 @@ app.get('/', (req, res) => {
 })
 
 // Opens a socket and listens for connections only if there is no parent module running the script.
+let server
 if (!module.parent) {
-  app.listen(8080, () => {
+  server = app.listen(8080, () => {
     console.log('Server started on port 8080...')
   })
 }
+
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+
+  if (err.message === simulatedErrMessage) {
+    server.close(() => {
+      console.log('Server shutting down due to a simulated error...')
+    })
+  }
+})
 
 export default app
